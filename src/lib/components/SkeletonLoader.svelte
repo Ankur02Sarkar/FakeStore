@@ -1,4 +1,3 @@
-<!-- src/lib/components/SkeletonLoader.svelte -->
 <script lang="ts">
 	export let count: number = 1;
 </script>

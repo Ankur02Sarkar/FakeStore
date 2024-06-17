@@ -1,22 +1,38 @@
 <!-- src/routes/+page.svelte -->
 <script lang="ts">
-	import { onMount } from 'svelte';
+	import { onDestroy, onMount } from 'svelte';
 	import { fetchProducts, fetchCategories, fetchProductsByCategory } from '$lib/api';
 	import { cart } from '$lib/store';
 	import SkeletonLoader from '$lib/components/SkeletonLoader.svelte';
 	import Navbar from '$lib/components/Navbar.svelte';
 	import { toast } from 'svelte-sonner';
+	import { Grid, List } from 'lucide-svelte';
 
-	let products: any = [];
-	let categories: any = [];
+	const isBrowser = typeof window !== 'undefined';
+	let products: any[] = [];
+	let displayedProducts: any[] = [];
+	let categories: string[] = [];
 	let selectedCategory = 'all';
+	let displayMode: 'grid' | 'list' = 'grid';
 	let loading = true;
 	let error: string | null = null;
+	let minPrice = 0;
+	let maxPrice = 1000;
+	let currentMinPrice = 0;
+	let currentMaxPrice = 1000;
+	let itemsPerLoad = 6;
+	let loadedItemsCount = 0;
 
 	onMount(async () => {
 		try {
 			categories = await fetchCategories();
 			products = await fetchProducts();
+			const prices = products.map((product) => product.price);
+			minPrice = Math.min(...prices);
+			maxPrice = Math.max(...prices);
+			currentMinPrice = minPrice;
+			currentMaxPrice = maxPrice;
+			loadMoreItems();
 		} catch (err) {
 			error = (err as Error).message;
 		} finally {
@@ -30,6 +46,14 @@
 		try {
 			products =
 				category === 'all' ? await fetchProducts() : await fetchProductsByCategory(category);
+			const prices = products.map((product) => product.price);
+			minPrice = Math.min(...prices);
+			maxPrice = Math.max(...prices);
+			currentMinPrice = minPrice;
+			currentMaxPrice = maxPrice;
+			displayedProducts = [];
+			loadedItemsCount = 0;
+			loadMoreItems();
 		} catch (err) {
 			error = (err as Error).message;
 		} finally {
@@ -45,6 +69,46 @@
 	function handleCategoryChange(event: Event) {
 		const target = event.target as HTMLSelectElement;
 		filterByCategory(target.value);
+	}
+
+	function loadMoreItems() {
+		const start = loadedItemsCount;
+		const end = loadedItemsCount + itemsPerLoad;
+		const newItems = products
+			.slice(start, end)
+			.filter((product) => product.price >= currentMinPrice && product.price <= currentMaxPrice);
+		displayedProducts = [...displayedProducts, ...newItems];
+		loadedItemsCount += itemsPerLoad;
+	}
+
+	function onScroll() {
+		if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+			loadMoreItems();
+		}
+	}
+
+	function onMinPriceChange(event: Event) {
+		currentMinPrice = +(event.target as HTMLInputElement).value;
+		filterProductsByPrice();
+	}
+
+	function onMaxPriceChange(event: Event) {
+		currentMaxPrice = +(event.target as HTMLInputElement).value;
+		filterProductsByPrice();
+	}
+
+	function filterProductsByPrice() {
+		displayedProducts = [];
+		loadedItemsCount = 0;
+		loadMoreItems();
+	}
+
+	if (isBrowser) {
+		window.addEventListener('scroll', onScroll);
+
+		onDestroy(() => {
+			window.removeEventListener('scroll', onScroll);
+		});
 	}
 </script>
 
@@ -62,16 +126,50 @@
 	</div>
 {:else}
 	<div>
-		<div class="mb-4">
+		<div class="mb-4 flex justify-between">
 			<select on:change={handleCategoryChange} class="border p-2">
 				<option value="all">All Categories</option>
 				{#each categories as category}
 					<option value={category}>{category}</option>
 				{/each}
 			</select>
+			<div class="flex items-center">
+				<button class="p-2" on:click={() => (displayMode = 'grid')}>
+					<Grid class="h-6 w-6" />
+				</button>
+				<button class="p-2" on:click={() => (displayMode = 'list')}>
+					<List class="h-6 w-6" />
+				</button>
+			</div>
 		</div>
-		<div class="grid grid-cols-1 gap-4 md:grid-cols-3 lg:grid-cols-4">
-			{#each products as product}
+		<div class="mb-4 flex justify-between">
+			<div class="mr-2 flex-1">
+				<label for="minPrice" class="block">Min Price: ${currentMinPrice}</label>
+				<input
+					type="range"
+					id="minPrice"
+					min={minPrice}
+					max={maxPrice}
+					value={currentMinPrice}
+					on:input={onMinPriceChange}
+					class="w-full"
+				/>
+			</div>
+			<div class="ml-2 flex-1">
+				<label for="maxPrice" class="block">Max Price: ${currentMaxPrice}</label>
+				<input
+					type="range"
+					id="maxPrice"
+					min={minPrice}
+					max={maxPrice}
+					value={currentMaxPrice}
+					on:input={onMaxPriceChange}
+					class="w-full"
+				/>
+			</div>
+		</div>
+		<div class={displayMode === 'grid' ? 'grid grid-cols-4 gap-4' : 'list'}>
+			{#each displayedProducts as product}
 				<div class="border p-4">
 					<img src={product.image} alt={product.title} class="h-48 w-full object-cover" />
 					<h2 class="text-lg font-bold">{product.title}</h2>
@@ -82,5 +180,10 @@
 				</div>
 			{/each}
 		</div>
+		{#if loading}
+			<div class="grid grid-cols-1 gap-4 md:grid-cols-3 lg:grid-cols-4">
+				<SkeletonLoader count={6} />
+			</div>
+		{/if}
 	</div>
 {/if}
