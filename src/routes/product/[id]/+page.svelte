@@ -3,6 +3,7 @@
 	import { onMount } from 'svelte';
 	import { fetchProducts } from '$lib/api';
 	import { page } from '$app/stores';
+	import SkeletonLoader from '$lib/components/SkeletonLoader.svelte';
 
 	let product: any = null;
 	let loading = true;
@@ -14,7 +15,7 @@
 			const products = await fetchProducts();
 			product = products.find((p: any) => p.id === +id);
 		} catch (err) {
-			error = err.message;
+			error = (err as Error).message;
 		} finally {
 			loading = false;
 		}

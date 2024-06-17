@@ -5,8 +5,8 @@
 	import { cart } from '$lib/store';
 	import SkeletonLoader from '$lib/components/SkeletonLoader.svelte';
 
-	let products = [];
-	let categories = [];
+	let products: any = [];
+	let categories: any = [];
 	let selectedCategory = 'all';
 	let loading = true;
 	let error: string | null = null;
@@ -16,7 +16,7 @@
 			categories = await fetchCategories();
 			products = await fetchProducts();
 		} catch (err) {
-			error = err.message;
+			error = (err as Error).message;
 		} finally {
 			loading = false;
 		}
@@ -29,7 +29,7 @@
 			products =
 				category === 'all' ? await fetchProducts() : await fetchProductsByCategory(category);
 		} catch (err) {
-			error = err.message;
+			error = (err as Error).message;
 		} finally {
 			loading = false;
 		}
@@ -37,6 +37,11 @@
 
 	function addToCart(product: any) {
 		cart.update((items) => [...items, product]);
+	}
+
+	function handleCategoryChange(event: Event) {
+		const target = event.target as HTMLSelectElement;
+		filterByCategory(target.value);
 	}
 </script>
 
@@ -49,7 +54,7 @@
 {:else}
 	<div>
 		<div class="mb-4">
-			<select on:change={(e) => filterByCategory(e.target.value)} class="border p-2">
+			<select on:change={handleCategoryChange} class="border p-2">
 				<option value="all">All Categories</option>
 				{#each categories as category}
 					<option value={category}>{category}</option>

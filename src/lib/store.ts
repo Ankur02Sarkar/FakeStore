@@ -1,10 +1,14 @@
 // src/lib/store.ts
 import { writable } from 'svelte/store';
 
-const storedCart = JSON.parse(localStorage.getItem('cart') || '[]');
+const isBrowser = typeof window !== 'undefined';
+
+const storedCart = isBrowser ? JSON.parse(localStorage.getItem('cart') || '[]') : [];
 
 export const cart = writable(storedCart);
 
-cart.subscribe((value) => {
-	localStorage.setItem('cart', JSON.stringify(value));
-});
+if (isBrowser) {
+	cart.subscribe((value) => {
+		localStorage.setItem('cart', JSON.stringify(value));
+	});
+}
