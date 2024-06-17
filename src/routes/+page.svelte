@@ -4,6 +4,8 @@
 	import { fetchProducts, fetchCategories, fetchProductsByCategory } from '$lib/api';
 	import { cart } from '$lib/store';
 	import SkeletonLoader from '$lib/components/SkeletonLoader.svelte';
+	import Navbar from '$lib/components/Navbar.svelte';
+	import { toast } from 'svelte-sonner';
 
 	let products: any = [];
 	let categories: any = [];
@@ -37,6 +39,7 @@
 
 	function addToCart(product: any) {
 		cart.update((items) => [...items, product]);
+		toast.success('Product added to cart');
 	}
 
 	function handleCategoryChange(event: Event) {
@@ -44,6 +47,12 @@
 		filterByCategory(target.value);
 	}
 </script>
+
+<Navbar />
+
+<svelte:head>
+	<title>My Store</title>
+</svelte:head>
 
 {#if error}
 	<p class="text-red-500">{error}</p>
