@@ -1,38 +1,98 @@
-# create-svelte
+# FakeStore
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/main/packages/create-svelte).
+This project is a single-page application (SPA) built with SvelteKit, Tailwind CSS, and TypeScript. It displays a list of products fetched from the Fake Store API, allows users to view product details, filter products by category and price range, and add products to a shopping cart with real-time updates and notifications.
 
-## Creating a project
+## Features
 
-If you're seeing this, you've probably already done this step. Congrats!
+- Display products in grid or list format with relevant information (e.g., name, price, image).
+- Toggle between grid and list view.
+- Show 2 items per row in grid mode.
+- Infinite scrolling with skeleton loader animation for new items.
+- Filter products by categories and price range.
+- Real-time cart updates with item addition and removal.
+- Cart page with functionality to increase/decrease item quantity and remove items.
+- Notifications for adding products to the cart.
+- Seamless navigation to the cart page without reloading.
 
-```bash
-# create a new project in the current directory
-npm create svelte@latest
+## Tech Stack
 
-# create a new project in my-app
-npm create svelte@latest my-app
+- [SvelteKit](https://kit.svelte.dev/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [Fake Store API](https://fakestoreapi.com/)
+- [Lucide Icons](https://lucide.dev/)
+- [Svelte-Toast](https://github.com/zerodevx/svelte-toast)
+
+## Setup and Installation
+
+1. **Clone the repository:**
+
+   ```
+   git clone https://github.com/Ankur02Sarkar/FakeStore
+   cd FakeStore
+   ```
+
+2. **Install dependencies:**
+
+   ```
+   npm install
+   ```
+
+3. **Run the development server:**
+
+   ```
+   npm run dev
+   ```
+
+4. **Open your browser and navigate to:**
+
+   ```
+   http://localhost:3000
+   ```
+
+## Project Structure
+
+```
+FakeStore/
+├── src/
+│   ├── lib/
+│   │   ├── api.ts                 # API service for fetching data
+│   │   ├── store.ts               # State management
+│   │   ├── components/
+│   │   │   └── SkeletonLoader.svelte # Skeleton loader component
+│   ├── routes/
+│   │   ├── product/
+│   │   │   ├── [id]/
+│   │   │   │   └── +page.svelte   # Product details page
+│   │   ├── cart/
+│   │   │   └── +page.svelte       # Cart page
+│   │   ├── +layout.svelte         # Layout component
+│   │   ├── +page.svelte           # Main product listing page
+│   ├── app.postcss                # Tailwind CSS configuration
+│   ├── app.d.ts                   # TypeScript definitions
+│   ├── app.html                   # Main HTML file
+├── static/
+│   ├── favicon.png                # Favicon
+├── tailwind.config.cjs            # Tailwind CSS configuration
+├── svelte.config.js               # Svelte configuration
+├── tsconfig.json                  # TypeScript configuration
+├── package.json                   # Project dependencies and scripts
+├── package-lock.json              # Lockfile
+├── postcss.config.cjs             # PostCSS configuration
+
 ```
 
-## Developing
+## How it can Help
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+This project serves as a comprehensive example of building a modern e-commerce web application with SvelteKit, Tailwind CSS, and TypeScript. It demonstrates:
 
-```bash
-npm run dev
+- Efficient state management using Svelte stores.
+- Real-time UI updates with reactive programming.
+- Building responsive and accessible UI components with Tailwind CSS.
+- Implementing infinite scrolling and skeleton loaders for better user experience.
+- Integrating third-party libraries for notifications and icons.
+- Using TypeScript for type safety and better development experience.
 
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
+## Contributing
 
-## Building
-
-To create a production version of your app:
-
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+Contributions are welcome! Please open an issue or submit a pull request for any improvements or bug fixes.
