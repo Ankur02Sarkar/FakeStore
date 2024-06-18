@@ -1,10 +1,6 @@
 <script lang="ts">
 	import { cart } from '$lib/store';
-	import { get, writable } from 'svelte/store';
-	import { onMount } from 'svelte';
 	import { toast } from 'svelte-sonner';
-
-	let cartItems = writable(get(cart));
 
 	function removeItem(index: number) {
 		cart.update((items) => {
