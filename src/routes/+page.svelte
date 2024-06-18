@@ -4,7 +4,6 @@
 	import { fetchProducts, fetchCategories, fetchProductsByCategory } from '$lib/api';
 	import { cart } from '$lib/store';
 	import SkeletonLoader from '$lib/components/SkeletonLoader.svelte';
-	import Navbar from '$lib/components/Navbar.svelte';
 	import { toast } from 'svelte-sonner';
 	import { Grid, List } from 'lucide-svelte';
 
@@ -110,9 +109,11 @@
 			window.removeEventListener('scroll', onScroll);
 		});
 	}
-</script>
 
-<Navbar />
+	function toSentenceCase(str: string): string {
+		return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
+	}
+</script>
 
 <svelte:head>
 	<title>My Store</title>
@@ -127,10 +128,10 @@
 {:else}
 	<div>
 		<div class="mb-4 flex justify-between">
-			<select on:change={handleCategoryChange} class="border p-2">
+			<select bind:value={selectedCategory} on:change={handleCategoryChange} class="border p-2">
 				<option value="all">All Categories</option>
 				{#each categories as category}
-					<option value={category}>{category}</option>
+					<option value={category}>{toSentenceCase(category)}</option>
 				{/each}
 			</select>
 			<div class="flex items-center">
@@ -172,7 +173,7 @@
 			{#each displayedProducts as product}
 				<div class="border p-4">
 					<img src={product.image} alt={product.title} class="h-48 w-full object-cover" />
-					<h2 class="text-lg font-bold">{product.title}</h2>
+					<a class="text-lg font-bold" href={`/product/${product.id}`}>{product.title}</a>
 					<p class="text-gray-700">${product.price}</p>
 					<button class="mt-2 bg-blue-500 p-2 text-white" on:click={() => addToCart(product)}
 						>Add to Cart</button

@@ -34,10 +34,6 @@
 	}
 </script>
 
-<nav class="flex items-center justify-between bg-gray-800 p-4 text-white">
-	<div class="text-xl font-bold">My Store - Cart</div>
-</nav>
-
 <div class="p-4">
 	{#if $cart.length === 0}
 		<p>Your cart is empty.</p>
