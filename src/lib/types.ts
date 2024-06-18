@@ -1,10 +1,15 @@
 // types.ts
 export type DisplayedProduct = {
 	id: number;
-	name: string;
 	price: number;
 	image: string;
 	title: string;
+	description: string;
+	category: string;
+	rating: {
+		rate: number;
+		count: number;
+	};
 	// Add more fields as necessary
 };
 
