@@ -21,6 +21,7 @@
 	let currentMaxPrice = 1000;
 	let itemsPerLoad = 6;
 	let loadedItemsCount = 0;
+	let searchQuery = '';
 
 	onMount(async () => {
 		try {
@@ -75,7 +76,8 @@
 		const end = loadedItemsCount + itemsPerLoad;
 		const newItems = products
 			.slice(start, end)
-			.filter((product) => product.price >= currentMinPrice && product.price <= currentMaxPrice);
+			.filter((product) => product.price >= currentMinPrice && product.price <= currentMaxPrice)
+			.filter((product) => product.title.toLowerCase().includes(searchQuery.toLowerCase()));
 		displayedProducts = [...displayedProducts, ...newItems];
 		loadedItemsCount += itemsPerLoad;
 	}
@@ -113,6 +115,13 @@
 	function toSentenceCase(str: string): string {
 		return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
 	}
+
+	function handleSearch(event: Event) {
+		searchQuery = (event.target as HTMLInputElement).value;
+		displayedProducts = [];
+		loadedItemsCount = 0;
+		loadMoreItems();
+	}
 </script>
 
 <svelte:head>
@@ -126,24 +135,34 @@
 		<SkeletonLoader count={8} />
 	</div>
 {:else}
-	<div>
-		<div class="mb-4 flex justify-between">
-			<select bind:value={selectedCategory} on:change={handleCategoryChange} class="border p-2">
+	<div class="p-4">
+		<div class="mb-4 flex flex-col md:flex-row md:items-center md:justify-between">
+			<input
+				type="text"
+				placeholder="Search products..."
+				class="mb-4 w-full rounded border p-2 md:mb-0 md:mr-4 md:w-1/3"
+				on:input={handleSearch}
+			/>
+			<select
+				bind:value={selectedCategory}
+				on:change={handleCategoryChange}
+				class="mb-4 w-full rounded border p-2 md:mb-0 md:w-1/4"
+			>
 				<option value="all">All Categories</option>
 				{#each categories as category}
 					<option value={category}>{toSentenceCase(category)}</option>
 				{/each}
 			</select>
-			<div class="flex items-center">
-				<button class="p-2" on:click={() => (displayMode = 'grid')}>
+			<div class="flex items-center space-x-2">
+				<button class="rounded border p-2" on:click={() => (displayMode = 'grid')}>
 					<Grid class="h-6 w-6" />
 				</button>
-				<button class="p-2" on:click={() => (displayMode = 'list')}>
+				<button class="rounded border p-2" on:click={() => (displayMode = 'list')}>
 					<List class="h-6 w-6" />
 				</button>
 			</div>
 		</div>
-		<div class="mb-4 flex justify-between">
+		<div class="mb-4 flex flex-col md:flex-row md:justify-between">
 			<div class="mr-2 flex-1">
 				<label for="minPrice" class="block">Min Price: ${currentMinPrice}</label>
 				<input
@@ -169,14 +188,24 @@
 				/>
 			</div>
 		</div>
-		<div class={displayMode === 'grid' ? 'grid grid-cols-4 gap-4' : 'list'}>
+		<div
+			class={displayMode === 'grid'
+				? 'grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4'
+				: 'list'}
+		>
 			{#each displayedProducts as product}
-				<div class="border p-4">
-					<img src={product.image} alt={product.title} class="h-48 w-full object-cover" />
-					<a class="text-lg font-bold" href={`/product/${product.id}`}>{product.title}</a>
-					<p class="text-gray-700">${product.price}</p>
-					<button class="mt-2 bg-blue-500 p-2 text-white" on:click={() => addToCart(product)}
-						>Add to Cart</button
+				<div class="rounded border bg-white p-4 shadow">
+					<img
+						src={product.image}
+						alt={product.title}
+						class="mb-4 h-48 w-full rounded object-cover"
+					/>
+					<a class="mb-2 block text-lg font-bold" href={`/product/${product.id}`}>{product.title}</a
+					>
+					<p class="mb-4 text-gray-700">${product.price}</p>
+					<button
+						class="mt-2 rounded bg-blue-500 p-2 text-white"
+						on:click={() => addToCart(product)}>Add to Cart</button
 					>
 				</div>
 			{/each}
