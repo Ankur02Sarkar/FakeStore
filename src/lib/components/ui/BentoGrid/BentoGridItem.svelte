@@ -17,6 +17,7 @@
 		className
 	)}
 >
+	<slot name="cart" />
 	<slot name="header" />
 	<div class="transition duration-200 group-hover/bento:translate-x-2">
 		<a

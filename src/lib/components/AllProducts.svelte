@@ -4,6 +4,7 @@
 	import { toast } from 'svelte-sonner';
 	import { BentoGrid, BentoGridItem } from './ui/BentoGrid';
 	import { DirectionAwareHover } from './ui/DirectionAwareHover';
+	import { CirclePlus } from 'lucide-svelte';
 
 	export let displayMode: string = 'list';
 	export let displayedProducts: DisplayedProducts;
@@ -21,6 +22,9 @@
 				<div slot="header" class="flex h-full min-h-[6rem] w-full flex-1 justify-center rounded-xl">
 					<img src={item.image} alt={item.title} class="" />
 				</div>
+				<button slot="cart" class="relative left-full m-0 w-fit" on:click={() => addToCart(item)}>
+					<CirclePlus />
+				</button>
 			</BentoGridItem>
 		{/each}
 	</BentoGrid>
