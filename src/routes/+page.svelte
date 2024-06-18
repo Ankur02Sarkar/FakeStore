@@ -194,7 +194,7 @@
 				: 'list'}
 		>
 			{#each displayedProducts as product}
-				<div class="rounded border bg-white p-4 shadow">
+				<div class="rounded border bg-white p-4 shadow flex flex-col">
 					<img
 						src={product.image}
 						alt={product.title}

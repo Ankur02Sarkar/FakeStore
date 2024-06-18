@@ -24,11 +24,15 @@
 </script>
 
 <nav class="flex items-center justify-between bg-gray-800 p-4 text-white">
-	<div class="text-xl font-bold"><button on:click={() => goto('/')}>My Store</button></div>
+	<div class="text-xl font-bold">
+		<button on:click={() => goto('/')}>My Store</button>
+	</div>
 	<button class="relative" on:click={openCart}>
-		<ShoppingCart class="h-6 w-6 cursor-pointer" />
+		<ShoppingCart class="ShoppingCart h-6 w-6 cursor-pointer" />
 		{#if cartCount > 0}
-			<span class="absolute right-0 top-0 rounded-full bg-red-500 px-2 text-xs">
+			<span
+				class="absolute right-0 top-0 -translate-y-1/2 translate-x-1/2 transform rounded-full bg-red-500 px-2 py-1 text-xs leading-none text-white"
+			>
 				{cartCount}
 			</span>
 		{/if}
