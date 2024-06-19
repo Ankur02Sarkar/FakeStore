@@ -108,6 +108,7 @@
 			className
 		)}
 	>
+	<slot name="cart" />
 		<AnimatePresence show={true}>
 			<Motion let:motion initial="initial" whileHover={direction} exit="exit">
 				<div use:motion class="h-full w-full">
@@ -129,9 +130,7 @@
 							<img
 								src={imageUrl}
 								alt={altText}
-								class={cn('h-full w-full object-contain mix-blend-darken', imageClassName)}
-								width="1000"
-								height="1000"
+								class={cn('h-full w-full object-contain mix-blend-darken dark:mix-blend-lighten', imageClassName)}
 							/>
 						</div>
 					</Motion>

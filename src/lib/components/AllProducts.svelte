@@ -25,7 +25,7 @@
 				className="bg-gray-100"
 			>
 				<div slot="header" class="flex h-full min-h-[6rem] w-full flex-1 justify-center rounded-xl" style="margin-top: 0;">
-					<img src={item.image} alt={item.title} class="mix-blend-darken" />
+					<img src={item.image} alt={item.title} class="mix-blend-darken dark:mix-blend-lighten" />
 				</div>
 				<button slot="cart" class="relative left-[90%] m-0 w-fit" on:click={() => addToCart(item)}>
 					<CirclePlus />
@@ -37,9 +37,12 @@
 	<div class="list">
 		{#each displayedProducts as product}
 			<div class="relative flex items-center justify-center">
-				<DirectionAwareHover imageUrl={product.image} altText={product.title} className="border border-gray-200 mb-4">
+				<DirectionAwareHover imageUrl={product.image} altText={product.title} className="border-[1px] border-gray-200 mb-4 dark:border-gray-400">
 					<p class="text-xl font-bold">{product.title}</p>
 					<p class="text-sm font-normal">${product.price}</p>
+					<button slot="cart" class="relative left-[90%] m-0 w-fit z-[99]" on:click={() => addToCart(product)}>
+						<CirclePlus />
+					</button>
 				</DirectionAwareHover>
 			</div>
 		{/each}

@@ -11,7 +11,7 @@
 	let displayedProducts: any[] = [];
 	let categories: string[] = [];
 	let selectedCategory = 'all';
-	let displayMode: 'grid' | 'list' = 'list';
+	let displayMode: 'grid' | 'list' = 'grid';
 	let loading = true;
 	let error: string | null = null;
 	let minPrice = 0;
@@ -126,60 +126,74 @@
 	<p class="text-red-500">{error}</p>
 {:else if loading}
 	<div class="grid grid-cols-1 gap-4 md:grid-cols-3 lg:grid-cols-4">
-		<SkeletonLoader count={8} />
+		<SkeletonLoader count={3} />
 	</div>
 {:else}
 	<div class="p-4">
-		<div class="mb-4 flex flex-col md:flex-row md:items-center md:justify-between">
-			<input
-				type="text"
-				placeholder="Search products..."
-				class="mb-4 w-full rounded border p-2 md:mb-0 md:mr-4 md:w-1/3"
-				on:input={handleSearch}
-			/>
-			<select
-				bind:value={selectedCategory}
-				on:change={handleCategoryChange}
-				class="mb-4 w-full rounded border p-2 md:mb-0 md:w-1/4"
+		<div class="filtersWrapper rounded-md bg-white dark:bg-gray-800 p-4 shadow-md mb-8">
+			<div
+				class="mb-4 flex flex-col space-y-4 md:flex-row md:items-center md:justify-between md:space-y-0"
 			>
-				<option value="all">All Categories</option>
-				{#each categories as category}
-					<option value={category}>{toSentenceCase(category)}</option>
-				{/each}
-			</select>
-			<div class="flex items-center space-x-2">
-				<button class="rounded border p-2" on:click={() => (displayMode = 'grid')}>
-					<Grid class="h-6 w-6" />
-				</button>
-				<button class="rounded border p-2" on:click={() => (displayMode = 'list')}>
-					<List class="h-6 w-6" />
-				</button>
-			</div>
-		</div>
-		<div class="mb-4 flex flex-col md:flex-row md:justify-between">
-			<div class="mr-2 flex-1">
-				<label for="minPrice" class="block">Min Price: ${currentMinPrice}</label>
 				<input
-					type="range"
-					id="minPrice"
-					min={minPrice}
-					max={maxPrice}
-					value={currentMinPrice}
-					on:input={onMinPriceChange}
-					class="w-full"
+					type="text"
+					placeholder="Search products..."
+					class="w-full rounded border p-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 md:w-1/3"
+					on:input={handleSearch}
 				/>
+				<select
+					bind:value={selectedCategory}
+					on:change={handleCategoryChange}
+					class="w-full rounded border p-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 md:w-1/4"
+				>
+					<option value="all">All Categories</option>
+					{#each categories as category}
+						<option value={category}>{toSentenceCase(category)}</option>
+					{/each}
+				</select>
+				<div class="flex items-center space-x-2">
+					<button
+						class={`rounded p-2 ${displayMode === 'grid' ? 'bg-indigo-500 text-white' : 'bg-gray-200 text-gray-600'}`}
+						on:click={() => (displayMode = 'grid')}
+					>
+						<Grid class="h-6 w-6" />
+					</button>
+					<button
+						class={`rounded p-2 ${displayMode === 'list' ? 'bg-indigo-500 text-white' : 'bg-gray-200 text-gray-600'}`}
+						on:click={() => (displayMode = 'list')}
+					>
+						<List class="h-6 w-6" />
+					</button>
+				</div>
 			</div>
-			<div class="ml-2 flex-1">
-				<label for="maxPrice" class="block">Max Price: ${currentMaxPrice}</label>
-				<input
-					type="range"
-					id="maxPrice"
-					min={minPrice}
-					max={maxPrice}
-					value={currentMaxPrice}
-					on:input={onMaxPriceChange}
-					class="w-full"
-				/>
+			<div class="flex flex-col space-y-4 md:flex-row md:justify-between md:space-y-0">
+				<div class="flex-1 md:mr-4">
+					<label for="minPrice" class="block text-sm font-medium text-gray-300"
+						>Min Price: ${currentMinPrice}</label
+					>
+					<input
+						type="range"
+						id="minPrice"
+						min={minPrice}
+						max={maxPrice}
+						value={currentMinPrice}
+						on:input={onMinPriceChange}
+						class="mx-auto mt-1 block w-3/4"
+					/>
+				</div>
+				<div class="flex-1 md:ml-4">
+					<label for="maxPrice" class="block text-sm font-medium text-gray-300"
+						>Max Price: ${currentMaxPrice}</label
+					>
+					<input
+						type="range"
+						id="maxPrice"
+						min={minPrice}
+						max={maxPrice}
+						value={currentMaxPrice}
+						on:input={onMaxPriceChange}
+						class="mx-auto mt-1 block w-3/4"
+					/>
+				</div>
 			</div>
 		</div>
 
