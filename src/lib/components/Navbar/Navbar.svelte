@@ -52,11 +52,11 @@
 				<DropdownMenu.Item on:click={() => resetMode()}>System</DropdownMenu.Item>
 			</DropdownMenu.Content>
 		</DropdownMenu.Root>
-		<button class="relative" on:click={openCart}>
-			<ShoppingCart class="ShoppingCart h-6 w-6 cursor-pointer" />
+		<button class="relative ShoppingCart" on:click={openCart}>
+			<ShoppingCart class="h-6 w-6 cursor-pointer"/>
 			{#if cartCount > 0}
 				<span
-					class="absolute right-0 top-0 -translate-y-1/2 translate-x-1/2 transform rounded-full bg-red-500 px-2 py-1 text-xs leading-none text-white"
+					class="cartBadge absolute right-0 top-0 -translate-y-1/2 translate-x-1/2 transform rounded-full bg-red-500 px-2 py-1 text-xs leading-none text-white"
 				>
 					{cartCount}
 				</span>

@@ -16,7 +16,7 @@
 </script>
 
 {#if displayMode === 'grid'}
-	<BentoGrid className="max-w-4xl mx-auto">
+	<BentoGrid className="max-w-4xl mx-auto AllProducts">
 		{#each displayedProducts as item, i (i)}
 			<BentoGridItem
 				title={item.title}
@@ -34,7 +34,7 @@
 		{/each}
 	</BentoGrid>
 {:else}
-	<div class="list">
+	<div class="list AllProducts">
 		{#each displayedProducts as product}
 			<div class="relative flex items-center justify-center">
 				<DirectionAwareHover imageUrl={product.image} altText={product.title} className="border-[1px] border-gray-200 mb-4 dark:border-gray-400">

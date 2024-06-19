@@ -125,7 +125,7 @@
 {#if error}
 	<p class="text-red-500">{error}</p>
 {:else if loading}
-	<div class="grid grid-cols-1 gap-4 md:grid-cols-3 lg:grid-cols-4">
+	<div class="loadingElem grid grid-cols-1 gap-4 md:grid-cols-3 lg:grid-cols-4">
 		<SkeletonLoader count={3} />
 	</div>
 {:else}
@@ -137,28 +137,28 @@
 				<input
 					type="text"
 					placeholder="Search products..."
-					class="w-full rounded border p-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 md:w-1/3"
+					class="searchInput w-full rounded border p-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 md:w-1/3"
 					on:input={handleSearch}
 				/>
 				<select
 					bind:value={selectedCategory}
 					on:change={handleCategoryChange}
-					class="w-full rounded border p-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 md:w-1/4"
+					class="filterCategories w-full rounded border p-2 focus:outline-none focus:ring-2 focus:ring-indigo-500 md:w-1/4"
 				>
 					<option value="all">All Categories</option>
 					{#each categories as category}
 						<option value={category}>{toSentenceCase(category)}</option>
 					{/each}
 				</select>
-				<div class="flex items-center space-x-2">
+				<div class="viewWrapper flex items-center space-x-2">
 					<button
-						class={`rounded p-2 ${displayMode === 'grid' ? 'bg-indigo-500 text-white' : 'bg-gray-200 text-gray-600'}`}
+						class={`gridView rounded p-2 ${displayMode === 'grid' ? 'bg-indigo-500 text-white' : 'bg-gray-200 text-gray-600'}`}
 						on:click={() => (displayMode = 'grid')}
 					>
 						<Grid class="h-6 w-6" />
 					</button>
 					<button
-						class={`rounded p-2 ${displayMode === 'list' ? 'bg-indigo-500 text-white' : 'bg-gray-200 text-gray-600'}`}
+						class={`listView rounded p-2 ${displayMode === 'list' ? 'bg-indigo-500 text-white' : 'bg-gray-200 text-gray-600'}`}
 						on:click={() => (displayMode = 'list')}
 					>
 						<List class="h-6 w-6" />
@@ -177,7 +177,7 @@
 						max={maxPrice}
 						value={currentMinPrice}
 						on:input={onMinPriceChange}
-						class="mx-auto mt-1 block w-3/4"
+						class="minPriceRange mx-auto mt-1 block w-3/4"
 					/>
 				</div>
 				<div class="flex-1 md:ml-4">
@@ -191,18 +191,12 @@
 						max={maxPrice}
 						value={currentMaxPrice}
 						on:input={onMaxPriceChange}
-						class="mx-auto mt-1 block w-3/4"
+						class="maxPriceRange mx-auto mt-1 block w-3/4"
 					/>
 				</div>
 			</div>
 		</div>
 
 		<AllProducts {displayMode} {displayedProducts} />
-
-		{#if loading}
-			<div class="grid grid-cols-1 gap-4 md:grid-cols-3 lg:grid-cols-4">
-				<SkeletonLoader count={6} />
-			</div>
-		{/if}
 	</div>
 {/if}
