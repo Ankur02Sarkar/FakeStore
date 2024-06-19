@@ -2,8 +2,8 @@
 	import { cart } from '$lib/store';
 	import type { DisplayedProducts } from '$lib/types';
 	import { toast } from 'svelte-sonner';
-	import { BentoGrid, BentoGridItem } from './ui/BentoGrid';
-	import { DirectionAwareHover } from './ui/DirectionAwareHover';
+	import { BentoGrid, BentoGridItem } from '../ui/BentoGrid';
+	import { DirectionAwareHover } from '../ui/DirectionAwareHover';
 	import { CirclePlus } from 'lucide-svelte';
 
 	export let displayMode: string = 'grid';

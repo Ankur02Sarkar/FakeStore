@@ -4,7 +4,7 @@
 	import { fetchProducts, fetchCategories, fetchProductsByCategory } from '$lib/api';
 	import SkeletonLoader from '$lib/components/SkeletonLoader.svelte';
 	import { Grid, List } from 'lucide-svelte';
-	import AllProducts from '$lib/components/AllProducts.svelte';
+	import { AllProducts } from '$lib/components/AllProducts';
 
 	const isBrowser = typeof window !== 'undefined';
 	let products: any[] = [];
