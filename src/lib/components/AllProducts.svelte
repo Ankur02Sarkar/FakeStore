@@ -38,7 +38,7 @@
 		{#each displayedProducts as product}
 			<div class="relative flex items-center justify-center">
 				<DirectionAwareHover imageUrl={product.image} altText={product.title} className="border-[1px] border-gray-200 mb-4 dark:border-gray-400">
-					<p class="text-xl font-bold">{product.title}</p>
+					<a href={`/product/${product.id}`} class="text-xl font-bold">{product.title}</a>
 					<p class="text-sm font-normal">${product.price}</p>
 					<button slot="cart" class="relative left-[90%] m-0 w-fit z-[99]" on:click={() => addToCart(product)}>
 						<CirclePlus />
