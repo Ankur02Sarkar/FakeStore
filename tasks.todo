@@ -1,4 +1,0 @@
-- imporove localstorage save algo.
-- save number of items added too
-- if item is added more than once dont create new vaue just increment the number of items of that
-- fix skeleton loaders
