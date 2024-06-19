@@ -129,7 +129,7 @@
 							<img
 								src={imageUrl}
 								alt={altText}
-								class={cn('h-full w-full scale-150 object-cover', imageClassName)}
+								class={cn('h-full w-full object-contain mix-blend-darken', imageClassName)}
 								width="1000"
 								height="1000"
 							/>

@@ -11,7 +11,7 @@
 	let displayedProducts: any[] = [];
 	let categories: string[] = [];
 	let selectedCategory = 'all';
-	let displayMode: 'grid' | 'list' = 'grid';
+	let displayMode: 'grid' | 'list' = 'list';
 	let loading = true;
 	let error: string | null = null;
 	let minPrice = 0;
