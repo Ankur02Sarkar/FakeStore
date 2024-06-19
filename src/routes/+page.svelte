@@ -167,7 +167,7 @@
 			</div>
 			<div class="flex flex-col space-y-4 md:flex-row md:justify-between md:space-y-0">
 				<div class="flex-1 md:mr-4">
-					<label for="minPrice" class="block text-sm font-medium text-gray-300"
+					<label for="minPrice" class="block text-sm font-medium text-gray-700 dark:text-gray-300"
 						>Min Price: ${currentMinPrice}</label
 					>
 					<input
@@ -181,7 +181,7 @@
 					/>
 				</div>
 				<div class="flex-1 md:ml-4">
-					<label for="maxPrice" class="block text-sm font-medium text-gray-300"
+					<label for="maxPrice" class="block text-sm font-medium text-gray-700 dark:text-gray-300"
 						>Max Price: ${currentMaxPrice}</label
 					>
 					<input

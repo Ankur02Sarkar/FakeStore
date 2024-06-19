@@ -4,6 +4,8 @@
 	import { fetchProductById } from '$lib/api';
 	import { page } from '$app/stores';
 	import SkeletonLoader from '$lib/components/SkeletonLoader.svelte';
+	import { cart } from '$lib/store';
+	import { toast } from 'svelte-sonner';
 
 	let product: any = null;
 	let loading = true;
@@ -20,6 +22,11 @@
 			loading = false;
 		}
 	});
+
+	function addToCart(product: any) {
+		cart.update((items) => [...items, product]);
+		toast.success('Product added to cart');
+	}
 </script>
 
 <svelte:head>
@@ -33,7 +40,11 @@
 {:else if product}
 	<main class="flex flex-col p-8 md:flex-row">
 		<div class="product-image p-4 md:w-1/3">
-			<img src={product.image} alt={product.title} class="w-full" />
+			<img
+				src={product.image}
+				alt={product.title}
+				class="w-full mix-blend-darken dark:mix-blend-lighten"
+			/>
 		</div>
 		<div class="product-details p-4 md:w-2/3">
 			<h1 class="mb-2 text-2xl font-bold">
@@ -61,7 +72,9 @@
 				<span class="ml-2 text-sm text-gray-500">Price per kg, Includes VAT</span>
 			</div>
 			<div class="flex space-x-2">
-				<button class="rounded bg-blue-600 px-4 py-2 text-white">Add to cart</button>
+				<button class="rounded bg-blue-600 px-4 py-2 text-white" on:click={() => addToCart(product)}
+					>Add to cart</button
+				>
 				<button class="rounded bg-blue-500 px-4 py-2 text-white">Buy now</button>
 				<button class="rounded bg-gray-200 px-4 py-2 text-gray-700">Add to wishlist</button>
 			</div>
