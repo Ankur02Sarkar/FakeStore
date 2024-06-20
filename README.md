@@ -1,18 +1,16 @@
 # FakeStore
 
-This project is a single-page application (SPA) built with SvelteKit, Tailwind CSS, and TypeScript. It displays a list of products fetched from the Fake Store API, allows users to view product details, filter products by category and price range, and add products to a shopping cart with real-time updates and notifications.
+This project is a single-page application (SPA) built with SvelteKit, Tailwind CSS, and TypeScript. It displays a list of products fetched from the Fake Store API, allows users to view fake ecommerce products details. The Project includes filtering products by category and price range, and add products to a shopping cart with real-time updates and notifications.
 
 ## Features
 
 - Display products in grid or list format with relevant information (e.g., name, price, image).
 - Toggle between grid and list view.
-- Show 2 items per row in grid mode.
 - Infinite scrolling with skeleton loader animation for new items.
 - Filter products by categories and price range.
 - Real-time cart updates with item addition and removal.
 - Cart page with functionality to increase/decrease item quantity and remove items.
 - Notifications for adding products to the cart.
-- Seamless navigation to the cart page without reloading.
 
 ## Tech Stack
 
@@ -21,7 +19,7 @@ This project is a single-page application (SPA) built with SvelteKit, Tailwind C
 - [TypeScript](https://www.typescriptlang.org/)
 - [Fake Store API](https://fakestoreapi.com/)
 - [Lucide Icons](https://lucide.dev/)
-- [Svelte-Toast](https://github.com/zerodevx/svelte-toast)
+- [Svelte Sonner](https://svelte-sonner.vercel.app/)
 
 ## Setup and Installation
 
@@ -54,32 +52,76 @@ This project is a single-page application (SPA) built with SvelteKit, Tailwind C
 
 ```
 FakeStore/
+├── .env                                  # Environment variables file
+├── .github/
+│   ├── workflows/
+│   │   ├── main.yml                      # YAML File for CI/CD Workflow
 ├── src/
+│   ├── app.css                           # Main CSS file
+│   ├── app.d.ts                          # TypeScript definitions
+│   ├── app.html                          # Main HTML file
+│   ├── index.test.ts                     # Index test file
 │   ├── lib/
-│   │   ├── api.ts                 # API service for fetching data
-│   │   ├── store.ts               # State management
+│   │   ├── api.ts                        # API service for fetching data
 │   │   ├── components/
-│   │   │   └── SkeletonLoader.svelte # Skeleton loader component
+│   │   │   ├── AllProducts/
+│   │   │   │   ├── AllProducts.svelte    # All products component
+│   │   │   │   ├── AllProducts.test.ts   # All products test file
+│   │   │   │   ├── index.ts              # All products index
+│   │   │   ├── DarkModeToggle/
+│   │   │   │   ├── DarkModeToggle.svelte # Dark mode toggle component
+│   │   │   │   ├── DarkModeToggle.test.ts # Dark mode toggle test file
+│   │   │   │   ├── index.ts              # Dark mode toggle index
+│   │   │   ├── Footer/
+│   │   │   │   ├── Footer.svelte         # Footer component
+│   │   │   │   ├── index.ts              # Footer index
+│   │   │   ├── Navbar/
+│   │   │   │   ├── index.ts              # Navbar index
+│   │   │   │   ├── Navbar.svelte         # Navbar component
+│   │   │   │   ├── Navbar.test.ts        # Navbar test file
+│   │   │   ├── SkeletonLoader.svelte     # Skeleton loader component
+│   │   │   ├── ui/
+│   │   │   │   ├── BentoGrid/
+│   │   │   │   │   ├── BentoGrid.svelte  # Bento grid component
+│   │   │   │   │   ├── BentoGridItem.svelte # Bento grid item component
+│   │   │   │   │   ├── index.ts          # Bento grid index
+│   │   │   │   ├── DirectionAwareHover/
+│   │   │   │   │   ├── DirectionAwareHover.svelte # Direction aware hover component
+│   │   │   │   │   ├── index.ts          # Direction aware hover index
+│   │   ├── index.ts                      # Library index
+│   │   ├── store.ts                      # State management
+│   │   ├── types.ts                      # TypeScript types
+│   │   ├── utils/
+│   │   │   ├── cn.ts                     # Utility file
+│   │   ├── utils.ts                      # Utility file
 │   ├── routes/
+│   │   ├── +layout.svelte                # Layout component
+│   │   ├── +page.svelte                  # Main product listing page
+│   │   ├── cart/
+│   │   │   ├── +page.svelte              # Cart page
+│   │   │   ├── Cart.test.ts              # Cart test file
 │   │   ├── product/
 │   │   │   ├── [id]/
-│   │   │   │   └── +page.svelte   # Product details page
-│   │   ├── cart/
-│   │   │   └── +page.svelte       # Cart page
-│   │   ├── +layout.svelte         # Layout component
-│   │   ├── +page.svelte           # Main product listing page
-│   ├── app.postcss                # Tailwind CSS configuration
-│   ├── app.d.ts                   # TypeScript definitions
-│   ├── app.html                   # Main HTML file
+│   │   │   │   ├── +page.svelte          # Product details page
 ├── static/
-│   ├── favicon.png                # Favicon
-├── tailwind.config.cjs            # Tailwind CSS configuration
-├── svelte.config.js               # Svelte configuration
-├── tsconfig.json                  # TypeScript configuration
-├── package.json                   # Project dependencies and scripts
-├── package-lock.json              # Lockfile
-├── postcss.config.cjs             # PostCSS configuration
-
+│   ├── favicon.png                       # Favicon
+├── .gitignore                            # Git ignore file
+├── .npmrc                                # npm configuration file
+├── .prettierignore                       # Prettier ignore file
+├── .prettierrc                           # Prettier configuration file
+├── components.json                       # Components configuration file
+├── eslint.config.js                      # ESLint configuration file
+├── foldertest.cjs                        # Test file
+├── package-lock.json                     # Lockfile
+├── package.json                          # Project dependencies and scripts
+├── playwright.config.ts                  # Playwright configuration file
+├── postcss.config.js                     # PostCSS configuration
+├── README.md                             # Project README file
+├── svelte.config.js                      # Svelte configuration
+├── tailwind.config.ts                    # Tailwind CSS configuration
+├── todos.todo                            # TODO list
+├── tsconfig.json                         # TypeScript configuration
+├── vite.config.ts                        # Vite configuration
 ```
 
 ## How it can Help
@@ -92,7 +134,3 @@ This project serves as a comprehensive example of building a modern e-commerce w
 - Implementing infinite scrolling and skeleton loaders for better user experience.
 - Integrating third-party libraries for notifications and icons.
 - Using TypeScript for type safety and better development experience.
-
-## Contributing
-
-Contributions are welcome! Please open an issue or submit a pull request for any improvements or bug fixes.
