@@ -47,7 +47,7 @@ This project is a single-page application (SPA) built with SvelteKit, Tailwind C
 4. **Open your browser and navigate to:**
 
    ```
-   http://localhost:3000
+   http://localhost:5173
    ```
 
 ## Project Structure
