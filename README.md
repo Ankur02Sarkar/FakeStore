@@ -36,13 +36,19 @@ This project is a single-page application (SPA) built with SvelteKit, Tailwind C
    npm install
    ```
 
-3. **Run the development server:**
+3. **(OPTIONAL) Run Unit Tests:**
+
+   ```
+   npm run test:unit
+   ```
+
+4. **Run the development server:**
 
    ```
    npm run dev
    ```
 
-4. **Open your browser and navigate to:**
+5. **Open your browser and navigate to:**
 
    ```
    http://localhost:5173
