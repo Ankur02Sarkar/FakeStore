@@ -24,7 +24,9 @@
 	}
 </script>
 
-<nav class="flex items-center justify-between bg-gray-500 p-4 text-white dark:bg-gray-800">
+<nav
+	class="fixed z-10 flex w-full items-center justify-between bg-gray-500 p-4 text-white dark:bg-gray-800"
+>
 	<div class="text-xl font-bold">
 		<button on:click={() => goto('/')}>My Store</button>
 	</div>
