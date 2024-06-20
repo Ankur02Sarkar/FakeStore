@@ -8,7 +8,7 @@
 	});
 </script>
 
-<footer class="bg-gray-900 p-4 text-center text-white">
+<footer class="bg-gray-900 p-4 text-center text-white absolute w-full bottom-0">
 	<p>
 		&copy; {currentYear}
 		<a
