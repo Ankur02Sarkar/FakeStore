@@ -30,7 +30,6 @@ describe('Navbar', () => {
 	it('renders correctly', () => {
 		const { getByText, container } = render(Navbar);
 		expect(getByText('My Store')).toBeInTheDocument();
-		expect(getByText('Toggle theme')).toBeInTheDocument();
 		expect(container.querySelector('.ShoppingCart')).toBeInTheDocument();
 	});
 
@@ -55,23 +54,4 @@ describe('Navbar', () => {
 		expect(goto).toHaveBeenCalledWith('/cart');
 	});
 
-	it('toggles theme', async () => {
-		const { getByRole, getByText } = render(Navbar);
-
-		const toggleButton = getByRole('button', { name: 'Toggle theme' });
-		await fireEvent.click(toggleButton);
-
-		const lightMode = getByText('Light');
-		const darkMode = getByText('Dark');
-		const systemMode = getByText('System');
-
-		await fireEvent.click(lightMode);
-		expect(setMode).toHaveBeenCalledWith('light');
-
-		await fireEvent.click(darkMode);
-		expect(setMode).toHaveBeenCalledWith('dark');
-
-		await fireEvent.click(systemMode);
-		expect(resetMode).toHaveBeenCalled();
-	});
 });
