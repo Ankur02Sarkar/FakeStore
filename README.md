@@ -109,7 +109,6 @@ FakeStore/
 ├── .npmrc                                # npm configuration file
 ├── .prettierignore                       # Prettier ignore file
 ├── .prettierrc                           # Prettier configuration file
-├── components.json                       # Components configuration file
 ├── eslint.config.js                      # ESLint configuration file
 ├── foldertest.cjs                        # Test file
 ├── package-lock.json                     # Lockfile
